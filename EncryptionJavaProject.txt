@@ -1,0 +1,107 @@
+import java.util.Scanner;
+/**
+ * Description of class EncryptionJavaProject: Java code to encrypt and decrypt a message.
+ * Note: Java code doesn't read numbers or characteres. Only alaphabetic letters will be considered as valid message.
+ * A message will pop up with the unknown character, so that the user can try again.
+ * BsC Computer Science and Multimedia - Computer Programming
+ * Author Luciana Teixeira
+ * Student No.: 18763
+ * Due date: 30/04/2018
+ */
+public class EncryptionJavaProject  {
+    public static void main (String[] args){
+        String option=""; 
+        while (!option.equals("3")){
+            //Program provides the user with 3 options:
+            //Option 1: Encrypt plaintext. 
+            //Option 2: Decrypt ciphertext. 
+            //Option 3: Exit program. 
+            System.out.println ("Option 1: Encrypt plaintext.");
+            System.out.println ("Option 2: Decrypt ciphertext.");
+            System.out.println ("Option 3: Exit program");
+            //user has to choose one of the options.          
+            Scanner kb = new Scanner (System.in); //get the option from the user.
+            option = kb.nextLine(); //option the user chose from the keyboard.                   
+            while (option.isEmpty()||option.length()>1||(!option.equals("1")&&!option.equals("2")&&!option.equals("3"))){
+                System.out.println("Invalid option.Try again");
+                option = kb.nextLine();              
+                //"while" used as a tool to get the user back to the main menu if none of the valid options are chosen correctly.
+            } 
+            if (option.equals("1")){
+                //user chooses option 1, it will ask to insert the text to be encrypted.
+                System.out.println("Insert your text");              
+                String text = kb.nextLine();//getting text from the user through the scanner. 
+                //vector with the letters from the alphabet:
+                char[]alphabet = {'a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z', 
+                        'A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z',' '};
+                //this is the cipher code to replace the original letters of the regular alphabet
+                char[]encrypted ={'m','j','v','h','d','c','q','w','l','z','a','o','p','t','s','b','e','n','i','r','x','k','u','y','g','f',
+                        'M','J','V','H','D','C','Q','W','L','Z','A','O','P','T','S','B','E','N','I','R','X','K','U','Y','G','F',' '};
+                //read the inserted text.
+                String output = "";
+                //temporary variable created for the output.
+                String buffer = "";
+                //in case unknown characters are inserted.
+                String error = "";
+                for (int a=0; a<text.length();a++){
+                    //read the text in cipher                  
+                    for (int b =0; b<alphabet.length; b++){
+                        //compare the two set of alphabet and replace the letters 
+                        if (text.charAt(a)==alphabet[b]){
+                            //print the text encrypted 
+                            //cipher inserted in the temporary variable
+                            buffer+=encrypted[b];
+                            break;                                      
+                        }
+                    }
+                    // if else stament for the unknown characters.
+                    if (buffer.isEmpty()){
+                        error+=text.charAt(a);
+                    } else {
+                        output+=buffer;
+                    }
+                    buffer = "";
+                }
+                System.out.println("Encrypt text: "+output);//final encrypted text.
+                if(error.length()>0)System.out.println("Unknown Character: "+error+" Try again."); //allows the user to try again.
+            }
+            if (option.equals("2")){
+                //if the user chooses option 2, it will ask to insert a text to be decrypted.
+                System.out.println("Insert your encrypted text");               
+                String text = kb.nextLine();//getting encrypted text from the user through the scanner.
+                //set of the encrypted alphabet.
+                char[]encrypted ={'m','j','v','h','d','c','q','w','l','z','a','o','p','t','s','b','e','n','i','r','x','k','u','y','g','f',
+                        'M','J','V','H','D','C','Q','W','L','Z','A','O','P','T','S','B','E','N','I','R','X','K','U','Y','G','F',' '};
+                //set of regular letters of the alphabet.
+                char[]alphabet = {'a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z', 
+                        'A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z',' '};              
+                //read the encrypted text inserted.
+                String output = "";
+                //temporary variable created for the output.
+                String buffer = "";
+                //in case unknown characters are inserted.
+                String error = "";
+                for (int c = 0; c<text.length(); c++){
+                    for (int d= 0; d<encrypted.length; d++){
+                        if (text.charAt(c)==encrypted[d]){
+                            buffer+=alphabet[d];
+                            break; 
+                        }                         
+                    }
+                    if (buffer.isEmpty()){
+                        error += text.charAt(c);
+                    } else {
+                        output += buffer;                                                
+                    }
+                    buffer="";
+                } 
+                System.out.println ("Decrypted text:" +output); //final decrypted text.
+                if(error.length()>0)System.out.println("Unknown Character: "+error+" Try Again"); //alllows user to try again.
+            }
+            if (option.equals("3")){
+                //if the user chooses option 3, the prgram will be closed and nothing else will run. 
+                System.out.println ("Program closed");//final message. 
+            }
+        }        
+    }
+}
